@@ -1,0 +1,58 @@
+<template>
+	<div class="app-component table-responsive">
+
+		<table class="table">
+		  <thead class="thead-light">
+		    <tr>
+		      <th>Id</th>
+		      <th scope="col">Task Title</th>
+		      <th scope="col">Priority</th>
+		      <th scope="col">Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<task-component v-for="task in tasks" :key="task.id" :task="task"></task-component>
+		  	<tr>
+			    <td><input type="text" name="" id="task" class="form-control"></td>
+			    <td>
+			    	<select id="select" class="form-control">
+			    		<option>Low</option>
+			    		<option>Medium</option>
+			    		<option>High</option>
+			    	</select>
+			    </td>
+			    <td><button class="btn btn-primary">Add Task</button></td>
+			</tr>
+		  </tbody>
+		</table>
+		
+	</div>
+
+</template>
+
+<script>
+	import TaskComponent from './Task.vue';
+
+	export default {
+
+		data(){
+
+			return{
+
+				tasks: [
+					{id:1, title:'Task1', priority:'low'},
+					{id:2, title:'Task2', priority:'medium'},
+					{id:3, title:'Task3', priority:'high'},
+				],
+				message: 'Hello from kupa'
+			}
+		},
+		components:{TaskComponent}
+	}
+
+</script>
+
+<style>
+	
+	
+</style>
