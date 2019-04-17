@@ -1800,21 +1800,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      tasks: [{
-        id: 1,
-        title: 'Task1',
-        priority: 'low'
-      }, {
-        id: 2,
-        title: 'Task2',
-        priority: 'medium'
-      }, {
-        id: 3,
-        title: 'Task3',
-        priority: 'high'
-      }],
+      tasks: [],
       message: 'Hello from kupa'
     };
+  },
+  methods: {
+    getTasks: function getTasks() {
+      var _this = this;
+
+      window.axios.get('api/tasks/').then(function (_ref) {
+        var data = _ref.data;
+        data.forEach(function (task) {
+          _this.tasks.push(task);
+        });
+      });
+    }
+  },
+  created: function created() {
+    this.getTasks();
   },
   components: {
     TaskComponent: _Task_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
