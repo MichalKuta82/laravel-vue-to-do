@@ -11,7 +11,7 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	<task-component v-for="task in tasks" :key="task.id" :task="task"></task-component>
+		  	<task-component v-for="task in tasks" :key="task.id" :task="task" @delete="remove"></task-component>
 		  	<tr>
 			    <td><input v-model="task.title" type="text" name="" id="task" class="form-control"></td>
 			    <td>
@@ -48,15 +48,29 @@
 
 		methods: {
 			getTasks(){
-				window.axios.get('api/tasks/').then(({data}) => {
+				window.axios.get('/api/tasks/').then(({data}) => {
 					data.forEach(task => {
 						this.tasks.push(task)
 					});
 				});
 			},
 			store(){
-				window.axios.post('/api/tasks', this.task).then(savedTask => {
-					this.tasks.push(savedTask.data);
+				if (this.checkInputs()) {
+					window.axios.post('/api/tasks', this.task).then(savedTask => {
+					this.tasks.push(savedTask.data);	
+					this.task.title = '';
+					})
+				}
+			},
+			checkInputs(){
+				if (this.task.title && this.task.priority) {
+					return true;
+				}
+			},
+			remove(id){
+				window.axios.delete(`/api/tasks/${id}`).then(() => {
+					let index = this.tasks.findIndex(task => task.id === id);
+					this.tasks.splice(index, 1);
 				});
 			}
 		},
