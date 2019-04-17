@@ -30,7 +30,7 @@ class TaskController extends Controller
         //
         $task = new Task();
         $task->title = $faker->sentence(1);
-        $task->priority = $faker->boolean ? 'low' : 'high';
+        $task->priority = $faker->randomElement(['Low', 'Medium', 'High']);
         $task->save();
 
         return response($task->jsonSerialize(), Response::HTTP_CREATED);
